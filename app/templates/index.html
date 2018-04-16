@@ -26,32 +26,36 @@
 
 <script>
     var viewModel = function () {
+        var self = this;
         this.title = ko.observable().extend({ required: true });
         this.desc = ko.observable().extend({ required: true });
-        this.clients = ko.observableArray([]);
+
         $.post("/get_clients", "", function (data) {
+            self.clients = ko.observableArray([]);
             var o = new Object();
             o.id = "";
             o.name = "";
             data.clients.unshift(o);
-            vm.clients = data.clients;
-
+            self.clients = data.clients;
+            self.clientValue = ko.observable("").extend({ required: { message: "You must select a client." } });
         });
 
-        this.clientValue = ko.observable("").extend({ required: { message: "You must select a client." } });
+
         this.clientPriority = ko.observable().extend({ required: true });
         this.targetDate = ko.observable(new Date()).extend({ required: true });
         this.dateFormat = ko.observable('mm/dd/yyyy');
 
-        this.productArea = ko.observableArray([]).extend({ required: true });
+
         $.post("/get_product_areas", "", function (data) {
+            self.productArea = ko.observableArray([]).extend({ required: true });
             var o = new Object();
             o.id = "";
             o.name = "";
             data.productAreas.unshift(o);
-            vm.productArea = data.productAreas;
+            self.productArea = data.productAreas;
+            self.productAreaValue = ko.observable("").extend({ required: { message: "You must select a product area." } });
         });
-        this.productAreaValue = ko.observable("").extend({ required: { message: "You must select a product area." } });
+
         this.errors = ko.validation.group(this);
     };
 
