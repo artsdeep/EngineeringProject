@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>App Feature Request</title>
+
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/datepicker.css">
+    <style>
+        h3 {
+            color: darkslateblue;
+            margin-left: 10px;
+        }
+        .validationMessage { color: Red; }
+    </style>
+</head>
+<body>
+<script type="text/javascript" src="/static/js/knockout-3.2.0.js"></script>
+<script type="text/javascript" src="/static/js/knockout.validation.min.js"></script>
+
+<script src="/static/js/jquery.min.js"></script>
+<script src="/static/js/bootstrap.min.js"></script>
+
+<script type="text/javascript" src="/static/js/bootstrap-datepicker.js"></script>
+
+<script>
+    var viewModel = function () {
+        this.title = ko.observable().extend({ required: true });
+        this.desc = ko.observable().extend({ required: true });
+        this.clients = ko.observableArray([]);
+        $.post("/get_clients", "", function (data) {
+            var o = new Object();
+            o.id = "";
+            o.name = "";
+            data.clients.unshift(o);
+            vm.clients = data.clients;
+
+        });
+
+        this.clientValue = ko.observable("").extend({ required: { message: "You must select a client." } });
+        this.clientPriority = ko.observable().extend({ required: true });
+        this.targetDate = ko.observable(new Date()).extend({ required: true });
+        this.dateFormat = ko.observable('mm/dd/yyyy');
+
+        this.productArea = ko.observableArray([]).extend({ required: true });
+        $.post("/get_product_areas", "", function (data) {
+            var o = new Object();
+            o.id = "";
+            o.name = "";
+            data.productAreas.unshift(o);
+            vm.productArea = data.productAreas;
+        });
+        this.productAreaValue = ko.observable("").extend({ required: { message: "You must select a product area." } });
+        this.errors = ko.validation.group(this);
+    };
+
+    ko.validation.rules.pattern.message = 'Invalid.';
+
+    ko.validation.configure({
+        registerExtenders: true,
+        messagesOnModified: true,
+        insertMessages: true,
+        parseInputAttributes: true,
+        messageTemplate: null
+    });
+
+    ko.bindingHandlers.numeric = {
+        init: function (element, valueAccessor) {
+            $(element).on("keydown", function (event) {
+                if (event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 27 || event.keyCode == 13 ||
+                    (event.keyCode == 65 && event.ctrlKey === true) ||
+                    (event.keyCode >= 35 && event.keyCode <= 39)) {
+                    return;
+                }
+                else {
+
+                    if (event.shiftKey || (event.keyCode < 48 || event.keyCode > 57) && (event.keyCode < 96 || event.keyCode > 105)) {
+                        event.preventDefault();
+                    }
+                }
+            });
+        }
+    };
+    ko.bindingHandlers.datepicker = {
+        init: function (element, valueAccessor, allBindings, viewModel, bindingContext) {
+
+            var dateFormat = allBindings().dateFormat;
+            var buttonImage = allBindings().buttonImage; // allBindings.get('dateFormat');
+
+            if (typeof dateFormat == 'undefined') {
+                dateFormat = 'mm/dd/yyyy';
+            }
+
+            var options = {
+                showOtherMonths: true,
+                selectOtherMonths: true,
+                dateFormat: dateFormat,
+                buttonImage: buttonImage,
+                showOn: "both"
+            };
+
+            if (typeof valueAccessor() === 'object') {
+                $.extend(options, valueAccessor());
+            }
+
+            $(element).datepicker(options);
+        }
+    };
+
+    var vm = new viewModel();
+    function resetViewModel() {
+        vm.title("");
+        vm.title.isModified(false);
+        vm.desc("");
+        vm.desc.isModified(false);
+        vm.clientPriority("");
+        vm.clientPriority.isModified(false);
+        vm.targetDate(new Date());
+        vm.targetDate.isModified(false);
+        vm.clientValue("");
+        vm.clientValue.isModified(false);
+        vm.productAreaValue("");
+        vm.productAreaValue.isModified(false);
+    }
+
+    function sendRequest() {
+        if(!vm.isValid()) {
+            var result = ko.validation.group(vm, {deep: true});
+            result.showAllMessages(true);
+            return false;
+        }
+        var jsonData = ko.toJSON(vm);
+        $.ajax({
+            url: "/add_feature_request",
+            type: "post",
+            data: jsonData,
+            contentType: "application/json",
+            success: function (data) {
+                alert("Request added!");
+                resetViewModel()
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert("Request was not added!");
+            }
+        });
+    }
+    $(document).ready(function () {
+        ko.applyBindings(vm);
+    });
+
+</script>
+<h3>App Feature Request</h3>
+<div style="margin: 5px">
+    <div class="form-group">
+        <label class="main-label">Title</label>
+        <input class="form-control" data-bind='value: title ' required placeholder="Enter title"/>
+
+    </div>
+    <div class="form-group">
+        <label class="main-label">Description</label>
+        <textarea class="form-control" data-bind='value: desc' placeholder="Enter description" rows="3" maxlength="2000"></textarea>
+    </div>
+    <div class="form-group">
+        <label class="main-label">Client</label>
+        <select class="form-control"
+                data-bind="options: clients, optionsText: 'name', optionsValue: 'id', value: clientValue"></select>
+    </div>
+    <div class="form-group">
+        <label class="main-label">Client Priority</label>
+        <input class="form-control" data-bind='numeric, value: clientPriority' placeholder="Enter priority"/>
+    </div>
+    <div class="form-group">
+        <label class="main-label">Target Date</label>
+        <input class="form-control" id='targetDate'
+               data-bind="datepicker: targetDate, Datevalue: targetDate, defaultDate: '', dateFormat: 'dd, MM yy'"
+               placeholder="Enter target date"/>
+    </div>
+    <div class="form-group">
+        <label class="main-label">Product Area</label>
+        <select class="form-control"
+                data-bind="options: productArea, optionsText: 'name', optionsValue: 'id', value: productAreaValue"></select>
+    </div>
+
+    <button class="btn btn-primary" onclick="sendRequest()">Create Request</button>
+
+</div>
+</body>
+</html>
