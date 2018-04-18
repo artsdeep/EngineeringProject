@@ -38,9 +38,9 @@ def add_feature_request():
         priority = int(content["clientPriority"])
         db.engine.execute("update feature_request set client_priority = client_priority+1 where client_priority >= "+str(priority))
     except:
-        abort(404)
+        return jsonify({'status': 'bad'})
     f_request = FeatureRequest(title=content["title"], desc=content["desc"], client_id=content["clientValue"], client_priority=content["clientPriority"], date_target=datetime.datetime.strptime(content["targetDate"], '%Y-%m-%dT%H:%M:%S.%fZ'))
     db.session.add(f_request)
     db.session.commit()
 
-    return Response(True)
+    return jsonify({'status': 'good'})
