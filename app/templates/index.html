@@ -145,8 +145,13 @@
             data: jsonData,
             contentType: "application/json",
             success: function (data) {
-                alert("Request added!");
-                resetViewModel()
+                if(data.status == "good"){
+                    alert("Request added!");
+                    resetViewModel()
+                }
+                else{
+                    alert("Request was not added!");
+                }
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 alert("Request was not added!");
