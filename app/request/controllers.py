@@ -1,26 +1,23 @@
 # Import flask dependencies
 import datetime
-from flask import Blueprint, request, render_template, jsonify, abort, Response, \
-                  flash, session, redirect, url_for
+from flask import Blueprint, request, render_template, jsonify
 from app.request.models import Client, ClientSchema, FeatureRequest, ProductArea, FeatureRequestSchema, ProductAreaSchema, db
-
+import app
 feature_request = Blueprint('auth', __name__, url_prefix='/')
 
 @feature_request.route('', methods=['GET', 'POST'])
 def index():
     return render_template("index.html")
-@feature_request.route('/signin/', methods=['GET', 'POST'])
-def signin():
-    return render_template("auth/signin.html")
 
 @feature_request.route('get_default_request', methods=['POST'])
 def get_default_request():
     f_request = FeatureRequest.query.all()
     f_request_schema = FeatureRequestSchema(many=True)
     output = f_request_schema.dump(f_request).data
-    return jsonify({'user': output})
+    return jsonify({'request': output})
 @feature_request.route('get_clients', methods=['POST'])
 def get_clients():
+    dd = app
     clients = Client.query.order_by(Client.name).all()
     client_schema = ClientSchema(many=True)
     output = client_schema.dump(clients).data
