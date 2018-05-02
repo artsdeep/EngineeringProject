@@ -4,3 +4,21 @@ SQLAlchemy==1.2.6
 Flask-Marshmallow==0.8
 Marshmallow==2.15.0
 Marshmallow-SQLAlchemy==0.13.2
+
+# Deployment
+gunicorn==19.7.1
+
+# Test
+behave==1.2.5
+WebTest==2.0.29
+#only in python 2.7
+mock==2.0.0
+
+Flask-DebugToolbar==0.10.1
+# PEP8
+pylint==1.8.1
+# Coverage
+coverage==4.4.2
+# Documentation
+Sphinx==1.6.5
+sphinx-autobuild==0.7.1
