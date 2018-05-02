@@ -2,8 +2,16 @@
 import datetime
 from flask import Blueprint, request, render_template, jsonify
 from app.request.models import Client, ClientSchema, FeatureRequest, ProductArea, FeatureRequestSchema, ProductAreaSchema, db
+from flask import send_from_directory
+import os
 import app
 feature_request = Blueprint('auth', __name__, url_prefix='/')
+
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'),
+                               'favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 @feature_request.route('', methods=['GET', 'POST'])
 def index():
