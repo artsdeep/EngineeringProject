@@ -9,7 +9,7 @@ install:
   - pip install codecov
 script:
   - coverage erase
-  - coverage run test_webapp.py && coverage html
+  - coverage run app/tests.py && coverage html
 #  - pylint --output-format=text webapp.py
 after_success:
   - codecov
