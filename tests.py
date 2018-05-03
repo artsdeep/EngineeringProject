@@ -12,7 +12,12 @@ class TestCase(unittest.TestCase):
         POSTGRES_DB = "test"
         DB_URL = 'postgresql+psycopg2://{user}:{pw}@{url}/{db}'.format(user=app.config['POSTGRES_USER'], pw=app.config['POSTGRES_PW'],
                                                                        url=app.config['POSTGRES_URL'], db=POSTGRES_DB)
-        app.config['SQLALCHEMY_DATABASE_URI'] = DB_URL
+
+        if os.environ.get('DATABASE_URL') is None:
+            app.config['SQLALCHEMY_DATABASE_URI'] = DB_URL
+        else:
+            app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
+        #app.config['SQLALCHEMY_DATABASE_URI'] = DB_URL
         self.app = app.test_client()
         db.drop_all()
         db.create_all()
