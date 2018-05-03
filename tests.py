@@ -1,7 +1,7 @@
 import os
 import unittest
 import json
-from app import db, ma, app
+from app import db, app
 
 TEST_DB = 'test.db'
 class TestCase(unittest.TestCase):
@@ -19,7 +19,7 @@ class TestCase(unittest.TestCase):
         self.app = app.test_client()
         db.drop_all()
         db.create_all()
-        path_sql_script = app.config.get("BASE_DIR")
+        path_sql_script = os.path.abspath(os.path.dirname(__file__))
         from app.request.models import Client
         if db.session.query(Client).count() == 0:
             sql_command = ''
