@@ -23,11 +23,11 @@ def not_found(error):
 from app.request.controllers import feature_request
 
 app.register_blueprint(feature_request)
-if os.environ.get('DATABASE_URL') is None:
+if os.environ.get('DATABASE_URL') is not None:
     print(os.environ.get('DATABASE_URL')+"!!!")
 else:
     print("net!!!")
-if os.environ['DATABASE_URL'] is None:
+if os.environ['DATABASE_URL'] is not None:
     print(os.environ['DATABASE_URL']+"!!!")
 else:
     print("net!!!!!!")
