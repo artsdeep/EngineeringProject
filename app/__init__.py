@@ -42,7 +42,7 @@ path_sql_script = os.path.abspath(os.path.dirname(__file__))
 print(path_sql_script)
 if db.session.query(Client).count() == 0:
     sql_command = ''
-    sql_file = open(path_sql_script+"/app/db.sql", 'r')
+    sql_file = open(path_sql_script+"/db.sql", 'r')
     for line in sql_file:
         if not line.startswith('--') and line.strip('\n'):
             sql_command += line.strip('\n')
