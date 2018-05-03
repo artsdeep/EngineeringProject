@@ -19,10 +19,6 @@ if os.environ.get('DATABASE_URL') is not None:
 else:
     print("net!!!")
 
-
-db.drop_all()
-db.create_all()
-
 @app.errorhandler(404)
 def not_found(error):
     return render_template('404.html'), 404
@@ -31,12 +27,13 @@ from app.request.controllers import feature_request
 
 app.register_blueprint(feature_request)
 
+db.create_all()
+
 from app.request.models import Client
 # Import flask and template operators
 from flask import Flask, render_template
 
 path_sql_script = app.config.get("BASE_DIR")
-from app.request.models import Client
 
 if db.session.query(Client).count() == 0:
     sql_command = ''
