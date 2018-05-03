@@ -14,15 +14,6 @@ app.config.from_object('config')
 
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
-
-
-@app.errorhandler(404)
-def not_found(error):
-    return render_template('404.html'), 404
-
-from app.request.controllers import feature_request
-
-app.register_blueprint(feature_request)
 if os.environ.get('DATABASE_URL') is not None:
     print(os.environ.get('DATABASE_URL')+"!!!")
 else:
@@ -31,6 +22,15 @@ else:
 
 db.drop_all()
 db.create_all()
+
+@app.errorhandler(404)
+def not_found(error):
+    return render_template('404.html'), 404
+
+from app.request.controllers import feature_request
+
+app.register_blueprint(feature_request)
+
 from app.request.models import Client
 # Import flask and template operators
 from flask import Flask, render_template
