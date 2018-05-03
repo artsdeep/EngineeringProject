@@ -10,14 +10,12 @@ before_script:
   - psql -c 'create database app;' -U postgres
   - psql -c 'create database test;' -U postgres
   - psql -c 'create user app_user WITH PASSWORD app_user_pass;' -U postgres
-
 script:
   - coverage erase
   - coverage run tests.py && coverage html
 #  - pylint --output-format=text webapp.py
 after_success:
   - codecov
-  
 
 deploy:
    - provider: heroku
