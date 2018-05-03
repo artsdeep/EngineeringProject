@@ -10,8 +10,8 @@ class TestCase(unittest.TestCase):
         app.config['WTF_CSRF_ENABLED'] = False
         app.config['DEBUG'] = False
         POSTGRES_DB = "test"
-        DB_URL = 'postgresql+psycopg2://{user}:{pw}@{url}/{db}'.format(user=app.config['POSTGRES_USER'], pw=app.config['POSTGRES_PW'],
-                                                                       url=app.config['POSTGRES_URL'], db=POSTGRES_DB)
+        DB_URL = 'postgresql+psycopg2://{user}:{pw}@{url}/{db}'.format(user="app_user", pw="app_user_pass",
+                                                                       url="127.0.0.1:5432", db=POSTGRES_DB)
 
 
 
