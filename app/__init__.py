@@ -27,10 +27,7 @@ if os.environ.get('DATABASE_URL') is not None:
     print(os.environ.get('DATABASE_URL')+"!!!")
 else:
     print("net!!!")
-if os.environ['DATABASE_URL'] is not None:
-    print(os.environ['DATABASE_URL']+"!!!")
-else:
-    print("net!!!!!!")
+
 
 db.drop_all()
 db.create_all()
