@@ -16,7 +16,8 @@ class TestCase(unittest.TestCase):
         if os.environ.get('DATABASE_URL') is None:
             app.config['SQLALCHEMY_DATABASE_URI'] = DB_URL
         else:
-            app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
+            app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']+"?sslmode=require"
+
         #app.config['SQLALCHEMY_DATABASE_URI'] = DB_URL
         self.app = app.test_client()
         db.drop_all()

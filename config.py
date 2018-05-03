@@ -12,7 +12,7 @@ DB_URL = 'postgresql+psycopg2://{user}:{pw}@{url}/{db}'.format(user=POSTGRES_USE
 if os.environ.get('DATABASE_URL') is None:
     SQLALCHEMY_DATABASE_URI = DB_URL
 else:
-    SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
+    SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']+"?sslmode=require"
 print(SQLALCHEMY_DATABASE_URI)
 #SQLALCHEMY_DATABASE_URI =DB_URL
 DATABASE_CONNECT_OPTIONS = {}
