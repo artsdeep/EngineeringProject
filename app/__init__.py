@@ -4,7 +4,7 @@ from flask import Flask, render_template
 # Import SQLAlchemy
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
-
+import os
 
 # Define the WSGI application object
 app = Flask(__name__, instance_relative_config=True)
@@ -23,7 +23,8 @@ def not_found(error):
 from app.request.controllers import feature_request
 
 app.register_blueprint(feature_request)
-print(app.config['SQLALCHEMY_DATABASE_URI']+"!!!")
+print(os.environ.get('DATABASE_URL')+"!!!")
+print(os.environ['DATABASE_URL']+"!!!!!")
 db.drop_all()
 db.create_all()
 from app.request.models import Client
