@@ -10,14 +10,19 @@ import os
 app = Flask(__name__, instance_relative_config=True)
 
 # Configurations
-app.config.from_object('config')
+#app.config.from_object('config')
+POSTGRES_URL = "127.0.0.1:5432"
+POSTGRES_USER = "app_user"
+POSTGRES_PW = "app_user_pass"
+POSTGRES_DB = "app"
+DB_URL = 'postgresql+psycopg2://{user}:{pw}@{url}/{db}'.format(user=POSTGRES_USER,pw=POSTGRES_PW,url=POSTGRES_URL,db=POSTGRES_DB)
+
+
+SQLALCHEMY_DATABASE_URI = DB_URL
 
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
-if os.environ.get('DATABASE_URL') is not None:
-    print(os.environ.get('DATABASE_URL')+"!!!")
-else:
-    print("net!!!")
+from app.request.models import *
 
 @app.errorhandler(404)
 def not_found(error):
