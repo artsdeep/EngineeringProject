@@ -23,7 +23,7 @@ class TestCase(unittest.TestCase):
         from app.request.models import Client
         if db.session.query(Client).count() == 0:
             sql_command = ''
-            sql_file = open(path_sql_script + "/db.sql", 'r')
+            sql_file = open(path_sql_script + "/app/db.sql", 'r')
             for line in sql_file:
                 if not line.startswith('--') and line.strip('\n'):
                     sql_command += line.strip('\n')
