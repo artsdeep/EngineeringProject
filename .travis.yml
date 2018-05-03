@@ -14,7 +14,7 @@ after_success:
   
 
 deploy:
-   - provider: heroku 
-     api_key:
-        secure: rPOdbUrqB5F2FdaLAA5gYHzoLp+4f7F/CKQeQn/RC03UrlPBKWNmAPzMA4DAM5VuzprumyRHh4uIW8f2+uln+n+29lMZBa+x4XWXYh6vkBEYowW9nIlMlegRV/IA3h/PQj+YxkIfpy1bw9LdQ6u08sMBwCsiOg0Uo9/lb2YTGg9oIf400j8UCsEeicF0KlDfsyW1/j06zSMFlS3Ozhh3BkcvjJmpyUskqo5Prhq9NZriT/Ua8lNv+t/0MbqxFTwxUD/CJfTPiY4T8qzlHw0Qm4ulET0d9jR1igNg/t5FIHG2S84Z782yiBOu5C8h2utE1Bi4ibvfeOs8JjQJAmQ9VG6wqM0TQn5zyi/C17yJw4utfcnoLBvrNSl6BqTY+O2VjtUigVPrxqeeNEiXtU4U6lzZo/r+aOcY6MIm84UFUmPHQOKDivJs3gSLoQ6ElgfAwZ67NpumMTlDkjUFev/TXkG6Zf95AH1AHZi/n+lfvG245ndwq0ep2G+8PKPTkyX3WBfI5/YSK/0eT9EX4gxrEc+xOBgkycl7bIZllmM82t0YFvK/oBiWuaBU2UF1rzCiG9FKJknVB/k/x47f0WvhOJBgYdonsUzvgglSymZS4oh7ZumoRpQDsFWUlqqGW9Vn3F6eo2VJ6UGUbufXynHNvFyCUTLogIMXBgxxs38njZs=
-     app: hidden-harbor-90068
+   provider: s3
+   access_key_id: AKIAJENN2CP5WCB32EZQ
+   secret_access_key: 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
+   bucket: engineeringproject
