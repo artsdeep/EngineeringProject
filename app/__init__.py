@@ -38,8 +38,8 @@ from app.request.models import Client
 # Import flask and template operators
 from flask import Flask, render_template
 
-path_sql_script = app.config.get("BASE_DIR")
-
+path_sql_script = os.path.abspath(os.path.dirname(__file__))
+print(path_sql_script)
 if db.session.query(Client).count() == 0:
     sql_command = ''
     sql_file = open(path_sql_script+"/app/db.sql", 'r')
