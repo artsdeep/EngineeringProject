@@ -9,7 +9,10 @@ class TestCase(unittest.TestCase):
         app.config['TESTING'] = True
         app.config['WTF_CSRF_ENABLED'] = False
         app.config['DEBUG'] = False
-        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(app.config['BASE_DIR'], 'test.db')
+        POSTGRES_DB = "test"
+        DB_URL = 'postgresql+psycopg2://{user}:{pw}@{url}/{db}'.format(user=app.config['POSTGRES_USER'], pw=app.config['POSTGRES_PW'],
+                                                                       url=app.config['POSTGRES_URL'], db=POSTGRES_DB)
+        app.config['SQLALCHEMY_DATABASE_URI'] = DB_URL
         self.app = app.test_client()
         db.drop_all()
         db.create_all()

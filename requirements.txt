@@ -4,7 +4,7 @@ SQLAlchemy==1.2.6
 Flask-Marshmallow==0.8
 Marshmallow==2.15.0
 Marshmallow-SQLAlchemy==0.13.2
-
+psycopg2==2.7.4
 # Deployment
 gunicorn==19.7.1
 

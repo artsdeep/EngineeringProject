@@ -2,8 +2,14 @@ DEBUG = True
 
 import os
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
+POSTGRES_URL = "127.0.0.1:5432"
+POSTGRES_USER = "postgres"
+POSTGRES_PW = "postgres_pass"
+POSTGRES_DB = "app"
+DB_URL = 'postgresql+psycopg2://{user}:{pw}@{url}/{db}'.format(user=POSTGRES_USER,pw=POSTGRES_PW,url=POSTGRES_URL,db=POSTGRES_DB)
 
-SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(BASE_DIR, 'app.db')
+#SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(BASE_DIR, 'app.db')
+SQLALCHEMY_DATABASE_URI =DB_URL
 DATABASE_CONNECT_OPTIONS = {}
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
