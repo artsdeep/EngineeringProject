@@ -23,7 +23,7 @@ def not_found(error):
 from app.request.controllers import feature_request
 
 app.register_blueprint(feature_request)
-
+db.drop_all()
 db.create_all()
 from app.request.models import Client
 # Import flask and template operators
