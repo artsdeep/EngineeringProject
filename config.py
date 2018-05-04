@@ -8,11 +8,7 @@ POSTGRES_PW = "app_user_pass"
 POSTGRES_DB = "app"
 DB_URL = 'postgresql+psycopg2://{user}:{pw}@{url}/{db}'.format(user=POSTGRES_USER,pw=POSTGRES_PW,url=POSTGRES_URL,db=POSTGRES_DB)
 
-#SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(BASE_DIR, 'app.db')
-if os.environ.get('DATABASE_URL') is None:
-    SQLALCHEMY_DATABASE_URI = DB_URL
-else:
-    SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']+"?sslmode=require"
+SQLALCHEMY_DATABASE_URI = DB_URL
 DATABASE_CONNECT_OPTIONS = {}
 SQLALCHEMY_TRACK_MODIFICATIONS = False
 
