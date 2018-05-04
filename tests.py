@@ -3,16 +3,17 @@ import unittest
 import json
 from app import db, app
 
-TEST_DB = 'test.db'
 class TestCase(unittest.TestCase):
     def setUp(self):
         app.config['TESTING'] = True
         app.config['WTF_CSRF_ENABLED'] = False
         app.config['DEBUG'] = False
+
         POSTGRES_DB = "test"
         DB_URL = 'postgresql+psycopg2://{user}:{pw}@{url}/{db}'.format(user="app_user", pw="app_user_pass",
                                                                        url="127.0.0.1:5432", db=POSTGRES_DB)
         app.config['SQLALCHEMY_DATABASE_URI'] = DB_URL
+
         self.app = app.test_client()
         db.drop_all()
         db.create_all()
