@@ -1,7 +1,7 @@
-# Import flask and template operators
-from flask import Flask, render_template
+from flask import Flask
+from flask import render_template
 
-# Import SQLAlchemy
+
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
 import os
@@ -35,8 +35,6 @@ app.register_blueprint(feature_request)
 db.create_all()
 
 from app.request.models import Client
-# Import flask and template operators
-from flask import Flask, render_template
 
 path_sql_script = os.path.abspath(os.path.dirname(__file__))
 print(path_sql_script)
