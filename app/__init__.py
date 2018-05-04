@@ -38,7 +38,6 @@ db.create_all()
 from app.request.models import Client
 
 path_sql_script = os.path.abspath(os.path.dirname(__file__))
-print(path_sql_script)
 if db.session.query(Client).count() == 0:
     sql_command = ''
     sql_file = open(path_sql_script+"/db.sql", 'r')
@@ -52,6 +51,5 @@ if db.session.query(Client).count() == 0:
                     # Assert in case of error
                 except:
                     print('Ops')
-
                 finally:
                     sql_command = ''
